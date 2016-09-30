@@ -7,16 +7,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
-import com.myretail.api.model.ProductInfo;
+import com.myretail.api.model.ProductNameApiResponse;
 
 @SpringBootApplication
+@ComponentScan("com.myretail.api.controller")
 public class Application {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	public static void main(String args[]) {
-		SpringApplication.run(Application.class);
+		SpringApplication.run(Application.class, args);
 	}
 
 	@Bean
@@ -27,8 +29,8 @@ public class Application {
 	@Bean
 	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 		return args -> {
-      ProductInfo pi = restTemplate.getForObject("https://api.target.com/products/v3/13860428?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz", ProductInfo.class);
-      log.info(pi.toString());
+      ProductNameApiResponse productNameApiResponse = restTemplate.getForObject("https://api.target.com/products/v3/13860428?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz", ProductNameApiResponse.class);
+      log.info(productNameApiResponse.toString());
 		};
 	}
 }
