@@ -4,20 +4,40 @@ This is the repository for the myRetail products API.
 ## Prerequisites
 * JDK 1.8
 * Maven 3.3
-* Mongo installed to localhost:27017 with a db named "myretail" & collection named "price"
+* Docker
 
-## To build, test and run
+## To run directly from Docker Hub
+Running the following commands will create a docker container for the myretail mongo db with some seed data,
+as well as a second container with the REST api running.  After these commands jump
+to the "Interacting with the application" section.
+```
+docker run -dit --name myretail-mongo zbodie/myretail-mongo
+docker exec myretail-mongo mongoimport --host 127.0.0.1 --db myretail --collection price --file /price.json
+docker run -dit --link myretail-mongo:mongo -p 8080:8080 zbodie/myretail-api java -jar /var/myretail/myretail-api-0.1.0.jar
+```
+
+## To build and run for Docker
 First, navigate to /code.
 ```
 cd code
 ```
-Next, build, run tests and package with Maven
+Next, build and package with Maven (this step skips the unit tests, please execute unit tests on the main branch)
 ```
-mvn clean package
+mvn -Dmaven.test.skip=true clean package
 ```
-Finally, run the output jar with java
+Build the Docker images
 ```
-java -jar target\gs-consuming-rest-0.1.0.jar
+cd ../docker/myretail-mongo
+docker build . -t myretail-mongo:latest
+cd ../myretail-api
+cp ../../code/target/myretail-api-0.1.0.jar .
+docker build . -t myretail-api:latest
+```
+Run the newly created images
+```
+docker run -dit --name myretail-mongo myretail-mongo
+docker exec myretail-mongo mongoimport --host 127.0.0.1 --db myretail --collection price --file /price.json
+docker run -dit --link myretail-mongo:mongo -p 8080:8080 myretail-api java -jar /var/myretail/myretail-api-0.1.0.jar
 ```
 
 ## Interacting with the application
