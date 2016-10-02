@@ -4,7 +4,7 @@ This is the repository for the myRetail products API.
 ## Prerequisites
 * JDK 1.8
 * Maven 3.3
-* Mongo installed to localhost:27017 with a db named "myretail" & collection named "price"
+* Mongo installed to localhost:27017 with a db named "myretail" & collection named "price" loaded with the data from file "price.json"
 
 ## To build, test and run
 First, navigate to /code.
