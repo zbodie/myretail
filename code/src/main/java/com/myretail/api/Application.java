@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import com.myretail.api.model.ProductNameApiResponse;
 
 @SpringBootApplication
+@ComponentScan("com.myretail.api.config")
 @ComponentScan("com.myretail.api.controller")
 @ComponentScan("com.myretail.api.dao")
 public class Application {

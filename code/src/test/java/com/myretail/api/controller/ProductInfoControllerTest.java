@@ -41,6 +41,8 @@ public class ProductInfoControllerTest {
         ProductInfo returnedInfo = response.getBody();
         assertThat(returnedInfo.getId(), equalTo(id));
         assertThat(returnedInfo.getName(), equalTo("The Big Lebowski (Blu-ray)"));
+        assertThat(returnedInfo.getCurrent_price().getValue(), equalTo(13.49));
+        assertThat(returnedInfo.getCurrent_price().getCurrency_code(), equalTo("USD"));
     }
 
     @Test
@@ -50,6 +52,7 @@ public class ProductInfoControllerTest {
 
         ProductInfo returnedInfo = response.getBody();
         assertThat(returnedInfo.getId(), equalTo(id));
-        assertThat(returnedInfo.getName(), equalTo("Unknown Product"));
+        assertThat(returnedInfo.getName(), equalTo("Not valid product in system: This product ID does not represent a valid product"));
+        assertThat(returnedInfo.getCurrent_price(), equalTo(null));
     }
 }
