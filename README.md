@@ -17,7 +17,7 @@ mvn clean package
 ```
 Finally, run the output jar with java
 ```
-java -jar target\gs-consuming-rest-0.1.0.jar
+java -jar target\myretail-api-0.1.0.jar
 ```
 
 ## Interacting with the application
