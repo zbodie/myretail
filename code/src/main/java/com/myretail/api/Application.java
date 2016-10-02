@@ -13,24 +13,12 @@ import com.myretail.api.model.ProductNameApiResponse;
 
 @SpringBootApplication
 @ComponentScan("com.myretail.api.controller")
+@ComponentScan("com.myretail.api.dao")
 public class Application {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	public static void main(String args[]) {
 		SpringApplication.run(Application.class, args);
-	}
-
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
-
-	@Bean
-	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
-		return args -> {
-      ProductNameApiResponse productNameApiResponse = restTemplate.getForObject("https://api.target.com/products/v3/13860428?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz", ProductNameApiResponse.class);
-      log.info(productNameApiResponse.toString());
-		};
 	}
 }

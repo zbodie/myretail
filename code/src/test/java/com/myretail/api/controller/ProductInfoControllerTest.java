@@ -34,11 +34,22 @@ public class ProductInfoControllerTest {
     }
 
     @Test
-    public void getProductInfo() throws Exception {
-        long id = 1498;
+    public void getProductInfoValidProductId() throws Exception {
+        long id = 13860428;
         ResponseEntity<ProductInfo> response = template.getForEntity(base.toString() + "/product/" + id, ProductInfo.class);
 
         ProductInfo returnedInfo = response.getBody();
         assertThat(returnedInfo.getId(), equalTo(id));
+        assertThat(returnedInfo.getName(), equalTo("The Big Lebowski (Blu-ray)"));
+    }
+
+    @Test
+    public void getProductInfoInvalidProductId() throws Exception {
+        long id = 55;
+        ResponseEntity<ProductInfo> response = template.getForEntity(base.toString() + "/product/" + id, ProductInfo.class);
+
+        ProductInfo returnedInfo = response.getBody();
+        assertThat(returnedInfo.getId(), equalTo(id));
+        assertThat(returnedInfo.getName(), equalTo("Unknown Product"));
     }
 }
