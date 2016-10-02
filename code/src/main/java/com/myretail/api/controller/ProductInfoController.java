@@ -2,6 +2,7 @@ package com.myretail.api.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +19,16 @@ public class ProductInfoController {
   ProductInfoDao productInfoDao;
 
   @RequestMapping(value="/product/{id}", method=RequestMethod.GET)
-  public ProductInfo productInfo(@PathVariable("id") Long id) {
+  public ProductInfo getProductInfo(@PathVariable("id") int id) {
     ProductInfo productInfo = new ProductInfo();
     productInfo = productInfoDao.getProductInfo(id);
+    return productInfo;
+  }
+
+  @RequestMapping(value="/product/{id}", method=RequestMethod.PUT)
+  public ProductInfo putProductInfo(@PathVariable("id") int id, @RequestBody ProductInfo newProductInfo) {
+    ProductInfo productInfo = new ProductInfo();
+    productInfo = productInfoDao.setProductInfo(newProductInfo);
     return productInfo;
   }
 }

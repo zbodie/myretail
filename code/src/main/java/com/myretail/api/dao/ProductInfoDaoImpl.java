@@ -26,7 +26,7 @@ public class ProductInfoDaoImpl implements ProductInfoDao {
   }
 
   @Override
-	public ProductInfo getProductInfo(long id) {
+	public ProductInfo getProductInfo(int id) {
     // get description from API
     RestTemplate restTemplate = new RestTemplate();
     ProductNameApiResponse productNameApiResponse = restTemplate.getForObject("https://api.target.com/products/v3/" + id + "?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz"
@@ -49,7 +49,21 @@ public class ProductInfoDaoImpl implements ProductInfoDao {
     return returnProductInfo;
   }
 
-  private Price getPriceFromMongo(long id) {
+  @Override
+  public ProductInfo setProductInfo(ProductInfo newProductInfo) {
+    Query query = new Query();
+    query.addCriteria(Criteria.where("_id").is(newProductInfo.getId()));
+
+    Update update = new Update();
+    update.set("value", newProductInfo.getCurrent_price().getValue());
+    update.set("currency_code", newProductInfo.getCurrent_price().getCurrency_code());
+
+    mongoOperation.upsert(query, update, MongoPrice.class);
+
+    return getProductInfo(newProductInfo.getId());
+  }
+
+  private Price getPriceFromMongo(int id) {
     MongoPrice mongoPrice = mongoOperation.findById(id, MongoPrice.class);
     Price returnProductPrice = null;
     if(mongoPrice != null) {

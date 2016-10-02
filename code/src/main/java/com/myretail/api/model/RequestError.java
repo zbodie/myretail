@@ -5,23 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestError {
 
-    private String message;
+  private String message;
 
-    public RequestError() {
-    }
+  public RequestError() {
+  }
 
-    public String getMessage() {
-        return message;
-    }
+  public String getMessage() {
+    return message;
+  }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
-    @Override
-    public String toString() {
-        return "RequestError{" +
-                "message=" + message +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "RequestError{" +
+            "message=" + message +
+            "}";
+  }
 }

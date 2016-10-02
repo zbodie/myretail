@@ -2,23 +2,25 @@ package com.myretail.api.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Document(collection = "price")
 public class MongoPrice {
 
   @Id
-  private long id;
+  private int id;
   private Double value;
   private String currency_code;
 
   public MongoPrice() {
   }
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -27,7 +29,7 @@ public class MongoPrice {
   }
 
   public void setValue(Double value) {
-    this.value = value;
+    this.value = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue();
   }
 
   public String getCurrency_code() {
@@ -44,6 +46,6 @@ public class MongoPrice {
               "id=" + id +
               ", value=" + value +
               ", currency_code=" + currency_code +
-              '}';
+              "}";
   }
 }

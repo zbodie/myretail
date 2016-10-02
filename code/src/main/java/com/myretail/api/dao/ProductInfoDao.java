@@ -4,6 +4,8 @@ import com.myretail.api.model.ProductInfo;
 
 public interface ProductInfoDao {
 
-	ProductInfo getProductInfo(long id);
+	ProductInfo getProductInfo(int id);
+
+  ProductInfo setProductInfo(ProductInfo newProductInfo);
 
 }
